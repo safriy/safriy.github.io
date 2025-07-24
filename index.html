@@ -41,9 +41,17 @@
     <!-- navbar -->
     <!-- jumbotron -->
     <section class="jumbotron text-center">
-      <img src="img/OIP.jpeg" alt="Safriy" class="rounded-circle" />
+      <style>
+        .small-img {
+          width: 100px;
+          height: auto; /* Menjaga proporsi gambar */
+        }
+      </style>
+
+      <img src="img/WhatsApp Image 2025-07-24 at 12.16.33.jpeg" alt="Safriy" class="rounded-circle" width="200" />
+
       <h1 class="display-4">Safriy</h1>
-      <p class="lead">student | programer</p>
+      <p class="lead">SMKN 5 MALANG | XI RPL 1</p>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path
           fill="#fff"
@@ -63,13 +71,10 @@
         </div>
         <div class="row justify-content-center fs-5 text-center">
           <div class="col-md-4">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti dolor recusandae esse culpa ad, repellat quibusdam similique aut rerum tempora ipsa perferendis quas, ex quo assumenda at consequatur labore inventore!</p>
+            <p>Perkenalkan nama saya Muhammad Safriy Naafik, Kelas 11 RPL 1, Saya berasal dari Jawa Timur Malang Blimbing</p>
           </div>
           <div class="col-md-4">
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam ea dicta fugiat excepturi debitis eum consectetur necessitatibus accusantium, nemo sunt. Officiis animi ratione sapiente, voluptas aperiam itaque maiores eos
-              explicabo.
-            </p>
+            <p>Saya pelajar dari SMKN 5 MALANG kelas 11 RPL 1 saya suka mendengarkan lagu dan ini top 3 lagu favorit saya</p>
           </div>
         </div>
       </div>
@@ -93,25 +98,25 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="img/OIP.jpeg" class="card-img-top" alt="project one" />
+              <img src="img/ab67616d0000b2739c5397f4251f7137ac19d93e.jpeg" class="card-img-top" alt="project one" />
               <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">1. Pemuda Rahasia (Sheila On 7)</p>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="img/OIP.jpeg" class="card-img-top" alt="project one" />
+              <img src="img/fe85986bfd29686ab95dac4f36cc8cb5.600x600x1.jpg" class="card-img-top" alt="project one" />
               <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">2. J.A.P (Sheila On 7)</p>
               </div>
             </div>
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="img/OIP.jpeg" class="card-img-top" alt="project one" />
+              <img src="img/1200x630bb.jpg" class="card-img-top" alt="project one" />
               <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">3. ILYSB (LANY)</p>
               </div>
             </div>
           </div>
@@ -157,11 +162,29 @@
     </section>
     <!-- contact -->
     <!-- footer -->
-    <footer>
-      <p>Created by <a href="https://www.instagram.com/sapp1__/?next=%2F">Safriy Naafik</a></p>
+    <footer class="text-center pb-5" style="background-color: rgb(188, 221, 243)">
+      <p>Created by <a href="https://www.instagram.com/sapp1__/?next=%2F" class="text-black fw-bold">sapp1__</a></p>
+          
     </footer>
     <!-- footer -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzwtwEq5u3mhG6lGsKFR8HMy_gi8jpM1QIy0oR5vtaxNDwpXf16-QpeKXMW7UTMiwUb/exec";
+      const form = document.forms["safriy"];
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => console.log("Success!", response))
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
+    <form name="safriy"></form>
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzwtwEq5u3mhG6lGsKFR8HMy_gi8jpM1QIy0oR5vtaxNDwpXf16-QpeKXMW7UTMiwUb/exec";
+      const form = document.forms["safriy"];
+    </script>
   </body>
 </html>
