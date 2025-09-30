@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Batik SMKN 5 Malang</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      :root {
+        --primary: #1e3a5f;
+        --secondary: #2a586f;
+        --accent: #38b2ac;
+        --light: #f0f7ff;
+        --dark: #1a202c;
+        --text: #2d3748;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text);
+        background: linear-gradient(135deg, #f0f7ff 0%, #e6f3ff 100%);
+        scroll-behavior: smooth;
+        line-height: 1.7;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .profile-photo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+      }
+
+      .profile-photo:hover {
+        transform: scale(1.1);
+        border-color: rgba(255, 255, 255, 0.6);
+      }
+
+      header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: white;
+      }
+
+      header nav {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      header nav a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        transition: var(--transition);
+        padding: 8px 20px;
+        border-radius: 30px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      header nav a:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transition: left 0.5s;
+        z-index: -1;
+      }
+
+      header nav a:hover:before,
+      header nav a.active:before {
+        left: 0;
+      }
+
+      header nav a:hover,
+      header nav a.active {
+        color: #81e6d9;
+        transform: translateY(-2px);
+      }
+
+      .nav-separator {
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: bold;
+        padding: 0 5px;
+      }
+
+      .nav-icon {
+        font-size: 1.1rem;
+      }
+
+      /* Sidebar Styles */
+      .sidebar-toggle {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        transition: var(--transition);
+      }
+
+      .sidebar-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: rotate(90deg);
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        right: -350px;
+        width: 320px;
+        height: 100vh;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: var(--transition);
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .sidebar.active {
+        right: 0;
+      }
+
+      .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-header h3 {
+        color: #81e6d9;
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .sidebar-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        transition: var(--transition);
+      }
+
+      .sidebar-close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: rotate(90deg);
+      }
+
+      .sidebar-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: var(--transition);
+        gap: 15px;
+        font-weight: 600;
+      }
+
+      .sidebar-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(5px);
+        color: #81e6d9;
+      }
+
+      .sidebar-link.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: #81e6d9;
+        border-left: 4px solid #81e6d9;
+      }
+
+      .sidebar-link i {
+        font-size: 1.2rem;
+        width: 25px;
+        text-align: center;
+      }
+
+      .sidebar-description {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        color: white;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .sidebar-description h4 {
+        color: #81e6d9;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("img/e343059d-f4c9-40ab-b7cc-97e978216428.jfif") center/cover no-repeat;
+        color: white;
+        text-align: center;
+        padding: 180px 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(transparent, var(--light));
+      }
+
+      .hero h1 {
+        font-size: 3.2rem;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        font-weight: 800;
+        letter-spacing: 1px;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero p {
+        font-size: 1.3rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+        animation: fadeInUp 1.2s ease;
+      }
+
+      .hero button {
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        background: linear-gradient(45deg, var(--secondary), var(--primary));
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: var(--transition);
+        font-weight: 600;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 1.4s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .hero button:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        transition: left 0.5s;
+        z-index: -1;
+      }
+
+      .hero button:hover:after {
+        left: 0;
+      }
+
+      .hero button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .section {
+        padding: 100px 40px;
+        text-align: center;
+        min-height: 50vh;
+      }
+
+      .section h2 {
+        color: var(--primary);
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 15px;
+        display: inline-block;
+        margin-bottom: 50px;
+        font-size: 2.5rem;
+        font-weight: 700;
+        position: relative;
+      }
+
+      .section h2:after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--secondary);
+      }
+
+      .section p {
+        max-width: 800px;
+        margin: 0 auto 30px;
+        font-size: 1.1rem;
+        color: var(--text);
+      }
+
+      .products,
+      .collections,
+      .instagram {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        padding: 0;
+        transition: var(--transition);
+        overflow: hidden;
+        position: relative;
+        border: 1px solid rgba(30, 58, 95, 0.1);
+      }
+
+      .card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .card:hover img {
+        transform: scale(1.1);
+      }
+
+      .card-content {
+        padding: 20px;
+      }
+
+      .card h3 {
+        margin: 15px 0 10px;
+        color: var(--primary);
+        font-size: 1.4rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card h3 .toggle-icon {
+        font-size: 1.2rem;
+        transition: var(--transition);
+      }
+
+      .card.active h3 .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+
+      .card .description {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease, padding 0.3s ease;
+      }
+
+      .card.active .description {
+        max-height: 500px;
+        padding-top: 15px;
+      }
+
+      .benefits {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 50px;
+      }
+
+      .benefit {
+        flex: 1;
+        min-width: 250px;
+        margin: 15px;
+        padding: 30px 20px;
+        background: white;
+        border-radius: 15px;
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+        border-top: 4px solid var(--primary);
+      }
+
+      .benefit:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .benefit h3 {
+        color: var(--primary);
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+      }
+
+      footer {
+        background: linear-gradient(135deg, var(--dark) 0%, #2d3748 100%);
+        color: white;
+        padding: 70px 40px 30px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px;
+        position: relative;
+      }
+
+      footer:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, var(--primary), var(--accent), var(--primary));
+      }
+
+      footer h3 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        color: #81e6d9;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      footer h3:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: var(--accent);
+      }
+
+      footer a {
+        color: #ddd;
+        text-decoration: none;
+        display: block;
+        margin: 8px 0;
+        transition: var(--transition);
+        position: relative;
+        padding-left: 15px;
+      }
+
+      footer a:before {
+        content: "▶";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 0.7rem;
+        transition: var(--transition);
+      }
+
+      footer a:hover {
+        color: var(--accent);
+        transform: translateX(5px);
+      }
+
+      footer a:hover:before {
+        transform: translateX(3px);
+      }
+
+      .copyright {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: #aaa;
+        font-size: 0.9rem;
+      }
+
+      /* Background foto untuk section */
+      .bg-photo {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      .bg-photo::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.85);
+        z-index: 0;
+      }
+
+      .bg-photo > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Tabel Foto dengan Efek Hover */
+      .photo-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 50px 0;
+        box-shadow: var(--shadow);
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .photo-table th,
+      .photo-table td {
+        border: 1px solid rgba(30, 58, 95, 0.1);
+        padding: 15px;
+        text-align: center;
+      }
+
+      .photo-table th {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 20px 15px;
+      }
+
+      .photo-table tr:nth-child(even) {
+        background-color: rgba(240, 247, 255, 0.5);
+      }
+
+      .photo-table tr {
+        transition: var(--transition);
+      }
+
+      .photo-table tr:hover {
+        background-color: rgba(30, 58, 95, 0.05);
+        transform: scale(1.01);
+      }
+
+      .photo-cell {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+
+      .photo-cell img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        transition: var(--transition);
+        border-radius: 10px;
+      }
+
+      .photo-cell:hover img {
+        transform: scale(1.15);
+        filter: brightness(0.9);
+      }
+
+      .photo-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, rgba(30, 58, 95, 0.8), rgba(42, 88, 111, 0.8));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 10px;
+      }
+
+      .photo-cell:hover .photo-overlay {
+        opacity: 1;
+      }
+
+      /* Konten khusus untuk setiap section */
+      .history-content,
+      .collection-content,
+      .about-content,
+      .contact-content {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: left;
+        line-height: 1.7;
+      }
+
+      .history-content img,
+      .collection-content img,
+      .about-content img {
+        width: 100%;
+        border-radius: 15px;
+        margin: 30px 0;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .history-content img:hover,
+      .collection-content img:hover,
+      .about-content img:hover {
+        transform: scale(1.02);
+      }
+
+      /* Animasi */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeInUp 0.8s ease;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          text-align: center;
+          padding: 15px 20px;
+        }
+
+        .logo-container {
+          margin-bottom: 15px;
+        }
+
+        header nav {
+          margin-top: 15px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        header nav a {
+          margin: 5px;
+          font-size: 0.9rem;
+          padding: 6px 12px;
+        }
+
+        .nav-separator {
+          display: none;
+        }
+
+        .sidebar {
+          width: 280px;
+          right: -280px;
+        }
+
+        .hero {
+          padding: 120px 20px;
+        }
+
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+
+        .hero p {
+          font-size: 1.1rem;
+        }
+
+        .section {
+          padding: 70px 20px;
+        }
+
+        .section h2 {
+          font-size: 2rem;
+        }
+
+        .benefits {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        footer {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 30px;
+          padding: 50px 20px 20px;
+        }
+
+        footer h3:after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .products,
+        .collections,
+        .instagram {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-table {
+          font-size: 0.9rem;
+        }
+
+        .photo-cell img {
+          height: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Overlay untuk sidebar -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <button class="sidebar-close" id="sidebarClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-links">
+        <a href="index.html" class="sidebar-link" id="portfolioLink">
+          <i class="fas fa-arrow-left"></i>
+          <span>Kembali ke Portfolio</span>
+        </a>
+        <a href="#home" class="sidebar-link active">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="#produk" class="sidebar-link">
+          <i class="fas fa-star"></i>
+          <span>Batik Nusantara</span>
+        </a>
+
+        <a href="#sejarah" class="sidebar-link">
+          <i class="fas fa-history"></i>
+          <span>Sejarah Batik</span>
+        </a>
+
+        <a href="#koleksi" class="sidebar-link">
+          <i class="fas fa-images"></i>
+          <span>Koleksi</span>
+        </a>
+
+        <a href="#tentang" class="sidebar-link">
+          <i class="fas fa-info-circle"></i>
+          <span>Tentang Kami</span>
+        </a>
+
+        <a href="#kontak" class="sidebar-link">
+          <i class="fas fa-envelope"></i>
+          <span>Kontak</span>
+        </a>
+      </div>
+
+      <div class="sidebar-description">
+        <h4>Tentang Batik</h4>
+        <p>Batik adalah seni tradisional Indonesia berupa pembuatan motif pada kain menggunakan lilin (malam) sebagai perintang warna, yang dilakukan dengan cara ditulis (tulis) atau dicap (cap).</p>
+      </div>
+    </div>
+
+    <header>
+      <div class="logo-container">
+        <img src="img/download (4).jfif" alt="Profile Photo" class="profile-photo" />
+        <h2>Batik Indonesia</h2>
+      </div>
+      <nav>
+        <a href="#home" class="active"><i class="fas fa-home nav-icon"></i> Home</a>
+        <!-- Tombol kembali ke portfolio di baris ke-3 -->
+        <a
+          href="index.html"
+          class="back-btn"
+          id="portfolioBtn"
+          style="
+            background: linear-gradient(45deg, #3498db, #2c3e50);
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            margin: 0 5px;
+          "
+        >
+          <i class="fas fa-arrow-left"></i>
+          Portfolio
+        </a>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="hero">
+      <h1>Koleksi Batik Khas Indonesia</h1>
+      <p>Menggali warisan budaya Nusantara</p>
+      <button onclick="scrollToSection('produk')"><i class="fas fa-arrow-down"></i> Jelajahi Batik Nusantara</button>
+    </section>
+
+    <!-- Produk Section -->
+    <section id="produk" class="section">
+      <h2>Batik Nusantara</h2>
+      <p>ada beberapa jenis batik di Nusantara antara lain sebagai berikut</p>
+      <div class="products">
+        <div class="card fade-in">
+          <img src="img/download.jfif" />
+          <div class="card-content">
+            <h3>Batik Tulis Klasik <i class="fas fa-chevron-down toggle-icon"></i></h3>
+            <div class="description">
+              <p>Batik klasik adalah karya batik tradisional dengan motif baku dan filosofis mendalam yang diciptakan sejak zaman kerajaan, sering kali mengacu pada budaya keraton seperti motif Parang, Kawung, dan Truntum.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="img/download (1).jfif" />
+          <div class="card-content">
+            <h3>Batik Cap <i class="fas fa-chevron-down toggle-icon"></i></h3>
+            <div class="description">
+              <p>
+                Batik cap adalah jenis batik yang proses pembuatannya menggunakan canting cap (stempel tembaga) untuk mencetak motif pada kain, menciptakan pola yang rapi, konsisten, dan dapat diproduksi secara cepat untuk efisiensi
+                produksi dan acara massal dibandingkan batik tulis.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card fade-in">
+          <img src="img/download (2).jfif" />
+          <div class="card-content">
+            <h3>Batik Lukis <i class="fas fa-chevron-down toggle-icon"></i></h3>
+            <div class="description">
+              <p>Batik lukis adalah teknik pembuatan batik dengan cara langsung melukiskan motif ke kain, sering kali menggunakan kuas atau canting, tanpa mengikuti pakem motif tradisional.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sejarah Section -->
+    <section id="sejarah" class="section">
+      <h2>Sejarah Batik</h2>
+      <div class="history-content fade-in">
+        <img src="img/download (3).jfif" alt="Sejarah Batik" />
+        <h3>Asal Usul Batik di Indonesia</h3>
+        <p>
+          Batik adalah seni lukis menggunakan lilin panas dan canting di atas kain yang memiliki nilai seni tinggi dan telah menjadi bagian dari budaya Indonesia sejak lama. Kata "batik" berasal dari gabungan dua kata bahasa Jawa: "amba"
+          yang berarti menulis dan "titik" yang berarti titik.
+        </p>
+        <p>Batik Indonesia telah diakui oleh UNESCO sebagai Warisan Kemanusiaan untuk Budaya Lisan dan Nonbendawi pada 2 Oktober 2009. Sejak saat itu, tanggal 2 Oktober ditetapkan sebagai Hari Batik Nasional.</p>
+        <p>
+          Asal usul batik di Indonesia terkait erat dengan perkembangan kerajaan Majapahit dan penyebaran ajaran Islam di tanah Jawa. Awalnya, batik hanya dibuat terbatas untuk kalangan keraton dan dikerjakan oleh para putri raja serta
+          pembantu-pembantunya.
+        </p>
+      </div>
+    </section>
+
+    <!-- Koleksi Section -->
+    <section id="koleksi" class="section">
+      <h2>Model Batik Nusantara</h2>
+      <div class="collection-content fade-in">
+        <p>Indonesia memiliki berbagai model batik, Model ini mencakup berbagai teknik dan motif batik tradisional maupun modern.</p>
+
+        <div class="collections">
+          <div class="card">
+            <img src="img/5c34b4b5-661e-40bb-9e21-01687dc0e809.png" />
+            <div class="card-content">
+              <h3>Batik Klasik <i class="fas fa-chevron-down toggle-icon"></i></h3>
+              <div class="description">
+                <p>Koleksi batik dengan motif-motif klasik dari berbagai daerah di Indonesia.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <img src="img/images1.jfif" />
+            <div class="card-content">
+              <h3>Batik Cap <i class="fas fa-chevron-down toggle-icon"></i></h3>
+              <div class="description">
+                <p>Koleksi batik dengan sentuhan kontemporer dan motif yang lebih kekinian.</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <img src="img/download (6).jfif" />
+            <div class="card-content">
+              <h3>Batik Tulis <i class="fas fa-chevron-down toggle-icon"></i></h3>
+              <div class="description">
+                <p>Koleksi pakaian jadi dengan motif batik untuk berbagai kesempatan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tentang Section -->
+    <section id="tentang" class="section">
+      <h2>Tentang Kami</h2>
+      <div class="about-content fade-in">
+        <img src="img/snapedit_1759126818864.jpeg" alt="SMKN 5 Malang" />
+        <h3>SMKN 5 Malang</h3>
+        <p>
+          SMKN 5 Malang adalah sekolah menengah kejuruan yang berkomitmen untuk melestarikan dan mengembangkan seni batik Indonesia. Melalui program keahlian tata busana dan kriya tekstil, siswa-siswi diajarkan berbagai teknik membatik
+          mulai dari tradisional hingga modern.
+        </p>
+        <p>Kami percaya bahwa batik bukan hanya sekadar kain bermotif, tetapi merupakan warisan budaya yang harus dilestarikan dan dikembangkan agar tetap relevan dengan zaman.</p>
+      </div>
+    </section>
+
+    <!-- Kontak Section -->
+    <section id="kontak" class="section">
+      <h2>Kontak Kami</h2>
+      <div class="contact-content fade-in">
+        <p>Hubungi kami untuk informasi lebih lanjut tentang koleksi batik SMKN 5 Malang atau untuk berkunjung ke galeri kami.</p>
+
+        <div class="benefits">
+          <div class="benefit">
+            <h3><i class="fas fa-map-marker-alt"></i> Alamat</h3>
+            <p>Jl. Ikan Piranha Atas, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142</p>
+          </div>
+          <div class="benefit">
+            <h3><i class="fas fa-phone"></i> Telepon</h3>
+            <p>0341-478195</p>
+          </div>
+          <div class="benefit">
+            <h3><i class="fas fa-envelope"></i> Email</h3>
+            <p>info@smkn5malang.sch.id</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <h3>Kontak SMKN 5 Malang</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Jl. Ikan Piranha Atas, Tunjungsekar, Kec. Lowokwaru, Kota Malang, Jawa Timur 65142</p>
+        <p><i class="fas fa-phone"></i> Tel: 0341-478195</p>
+        <p><i class="fas fa-envelope"></i> Email: info@smkn5malang.sch.id</p>
+      </div>
+      <div>
+        <h3>Tautan Cepat</h3>
+        <a href="#sejarah">Sejarah Batik</a>
+        <a href="#produk">Produk Unggulan</a>
+        <a href="#koleksi">Model Batik</a>
+      </div>
+      <div>
+        <h3>Ikuti Kami</h3>
+        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 Batik SMKN 5 Malang. Semua Hak Dilindungi.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Fungsi untuk scroll ke section tertentu
+      function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
+        closeSidebar();
+      }
+
+      // Fungsi untuk membuka sidebar
+      function openSidebar() {
+        document.getElementById("sidebar").classList.add("active");
+        document.getElementById("overlay").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Fungsi untuk menutup sidebar
+      function closeSidebar() {
+        document.getElementById("sidebar").classList.remove("active");
+        document.getElementById("overlay").classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      // Fungsi untuk toggle deskripsi batik
+      function toggleDescription(card) {
+        card.classList.toggle("active");
+      }
+
+      // Menangani navigasi dan menandai link aktif
+      document.addEventListener("DOMContentLoaded", function () {
+        const navLinks = document.querySelectorAll("header nav a, .sidebar-link");
+        const sidebarToggle = document.getElementById("sidebarToggle");
+        const sidebarClose = document.getElementById("sidebarClose");
+        const overlay = document.getElementById("overlay");
+        const portfolioBtn = document.getElementById("portfolioBtn");
+        const portfolioLink = document.getElementById("portfolioLink");
+        const batikCards = document.querySelectorAll(".card");
+
+        // Toggle sidebar
+        sidebarToggle.addEventListener("click", openSidebar);
+        sidebarClose.addEventListener("click", closeSidebar);
+        overlay.addEventListener("click", closeSidebar);
+
+        // Biarkan link portfolio bekerja normal (tanpa preventDefault)
+        portfolioBtn.addEventListener("click", function (e) {
+          // Biarkan link bekerja normal
+          closeSidebar();
+        });
+
+        portfolioLink.addEventListener("click", function (e) {
+          // Biarkan link bekerja normal
+          closeSidebar();
+        });
+
+        // Menangani klik pada judul batik untuk menampilkan/sembunyikan deskripsi
+        batikCards.forEach((card) => {
+          const title = card.querySelector("h3");
+          title.addEventListener("click", function () {
+            toggleDescription(card);
+          });
+        });
+
+        // Menangani klik pada nav link (kecuali portfolio)
+        navLinks.forEach((link) => {
+          if (!link.href.includes("index.html")) {
+            link.addEventListener("click", function (e) {
+              e.preventDefault();
+
+              // Hapus kelas active dari semua link
+              navLinks.forEach((l) => l.classList.remove("active"));
+
+              // Tambah kelas active ke link yang diklik
+              this.classList.add("active");
+
+              // Scroll ke section yang sesuai
+              const targetId = this.getAttribute("href").substring(1);
+              if (targetId) {
+                scrollToSection(targetId);
+              }
+            });
+          }
+        });
+
+        // Update link aktif berdasarkan scroll position
+        window.addEventListener("scroll", function () {
+          let current = "";
+          const sections = document.querySelectorAll(".section, .hero");
+
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 100) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          navLinks.forEach((link) => {
+            if (!link.href.includes("index.html")) {
+              link.classList.remove("active");
+              if (link.getAttribute("href").substring(1) === current) {
+                link.classList.add("active");
+              }
+            }
+          });
+        });
+
+        // Animasi fade-in untuk elemen saat scroll
+        const fadeElements = document.querySelectorAll(".fade-in");
+
+        const fadeInOnScroll = function () {
+          fadeElements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+
+            if (elementTop < window.innerHeight - elementVisible) {
+              element.classList.add("fade-in");
+            }
+          });
+        };
+
+        window.addEventListener("scroll", fadeInOnScroll);
+        fadeInOnScroll(); // Jalankan sekali saat halaman dimuat
+      });
+    </script>
+  </body>
+</html>
