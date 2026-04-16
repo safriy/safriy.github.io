@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+Berikut adalah kode yang telah diperbaiki dan dirapikan pada bagian **Projects**, termasuk struktur grid yang rapi, duplikasi konten yang dihapus, serta penambahan contoh proyek yang lebih beragam. ```html
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -223,6 +224,56 @@
       .delay-3 {
         animation-delay: 0.6s;
       }
+
+      /* Timeline styles */
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px 0;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background: var(--primary-color);
+        transform: translateX(-50%);
+      }
+      .timeline-item {
+        position: relative;
+        margin-bottom: 50px;
+      }
+      .timeline-content {
+        position: relative;
+        width: calc(50% - 40px);
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .timeline-item:nth-child(odd) .timeline-content {
+        left: 0;
+      }
+      .timeline-item:nth-child(even) .timeline-content {
+        left: calc(50% + 40px);
+      }
+      .timeline-date {
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+      @media (max-width: 768px) {
+        .timeline::before {
+          left: 20px;
+        }
+        .timeline-content {
+          width: calc(100% - 60px);
+          left: 60px !important;
+        }
+      }
     </style>
     <title>Safriy Naafik | Portfolio</title>
   </head>
@@ -358,18 +409,31 @@
       <div class="container">
         <div class="row text-center mb-5">
           <div class="col">
-            <h2 class="section-title">My project</h2>
-            <p class="lead"></p>
+            <h2 class="section-title">My Projects</h2>
+            <p class="lead">Berikut beberapa proyek yang telah saya kerjakan</p>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-4 mb-4 fade-in delay-2">
-            <div class="card">
-              <img src="img/images.jfif" class="card-img-top" alt="ILYSB" />
+        <div class="row g-4">
+          <!-- Project 1 - Web Batik -->
+          <div class="col-md-6 col-lg-4 fade-in delay-1">
+            <div class="card h-100">
+              <img src="img/images.jfif" class="card-img-top" alt="Web Batik Nusantara" />
               <div class="card-body text-center">
-                <h5 class="card-title">Web Batik</h5>
-                <p class="card-text text-muted">Batik Nusantara</p>
+                <h5 class="card-title">Web Batik Nusantara</h5>
+                <p class="card-text text-muted">Website informasi dan galeri batik dari berbagai daerah di Indonesia.</p>
                 <a href="index1.html" class="btn btn-sm btn-outline-primary">View Details</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 - API Documentation -->
+          <div class="col-md-6 col-lg-4 fade-in delay-1">
+            <div class="card h-100">
+              <img src="img/Apa-Itu-API-dan-Bagaimana-Cara-Kerjanya.webp" class="card-img-top" alt="API Documentation" />
+              <div class="card-body text-center">
+                <h5 class="card-title">API Documentation</h5>
+                <p class="card-text text-muted">Website panduan penggunaan API.</p>
+                <a href="http://103.186.167.18:8000/serverapikel5rpl1/doku/dokumentasiapi.html" class="btn btn-sm btn-outline-primary">View Details</a>
               </div>
             </div>
           </div>
@@ -454,10 +518,15 @@
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
-
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-          });
+          const targetId = this.getAttribute("href");
+          if (targetId !== "#") {
+            const target = document.querySelector(targetId);
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+              });
+            }
+          }
         });
       });
 
